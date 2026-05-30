@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRO | Minimal Fashion</title>
+<style>
+    /* Estilos generales básicos */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('CAMINHO_DA_TUA_IMAGEM.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    /* Barra de Navegación (Estilo clásico) */
+    .navbar {
+        background-color: white;
+        padding: 20px;
+        text-align: center; /* Centra el menú completo */
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .nav-links {
+        list-style: none;
+    }
+
+    .nav-links li {
+        display: inline; /* Coloca los enlaces en línea horizontal */
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .nav-links a.active {
+        font-weight: bold;
+    }
+
+    /* Banner Principal */
+    .hero {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .hero.hidden {
+        display: none; /* Lo oculta el archivo JavaScript */
+    }
+
+    .hero h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-top: 15px;
+        padding: 10px 25px;
+        background-color: white;
+        color: black;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Galería de Productos (Adiós a Grid, hola Inline-Block) */
+    .products {
+        text-align: center; /* Centra el grupo de productos */
+        padding: 40px 20px;
+    }
+
+    .product-card {
+        display: inline-block; /* Alinea las tarjetas en filas naturales */
+        width: 260px;
+        margin: 15px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.9);
+        vertical-align: top; /* Evita desajustes si los textos miden distinto */
+        text-align: center;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 300px;
+    }
+
+    .product-card h3 {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .add-to-cart {
+        margin-top: 10px;
+        padding: 6px 15px;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Control de Vistas Dinámicas */
+    .view-section {
+        display: none; /* Oculto por defecto */
+    }
+
+    .view-section.active {
+        display: block; /* Lo muestra el archivo JavaScript */
+    }
+
+    .section-title {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 24px;
+    }
+
+    /* Vista del Carrito */
+    .cart-container {
+        background-color: white;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .cart-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .total-container {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .btn-clear {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="logo" id="nav-logo">ASTRO</div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-target="coleccion">Colección</a></li>
+            <li><a href="#" class="nav-link" data-target="hombre">Hombre</a></li>
+            <li><a href="#" class="nav-link" data-target="mujer">Mujer</a></li>
+            <li><a href="#" class="nav-link" id="cart-btn" data-target="carrito">Carrito (0)</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner Principal -->
+    <header id="main-hero" class="hero">
+        <div class="hero-content">
+            <h1>ESSENTIALS</h1>
+            <p>Menos es más. Calidad sobre cantidad.</p>
+            <button class="btn" id="explore-btn">Explorar</button>
+        </div>
+    </header>
+
+    <!-- VISTA 1: COLECCIÓN -->
+    <div id="view-coleccion" class="view-section active">
+        <section class="products">
+            <div class="product-card" data-id="1" data-name="Camiseta Orgánica" data-price="29.99">
+                <img src="imagenes/IMG_9542-removebg-preview.png" alt="Camiseta">
+                <h3>Camiseta Orgánica</h3>
+                <p>29.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+            <div class="product-card" data-id="2" data-name="Chaqueta Denim" data-price="44.99">
+                <img src="imagenes/IMG_9547-removebg-preview.png" alt="Chaqueta">
+                <h3>Chaqueta Denim</h3>
+                <p>44.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+            <div class="product-card" data-id="3" data-name="Pantalón Chino" data-price="59.99">
+                <img src="imagenes/IMG_9544-removebg-preview.png" alt="Pantalones">
+                <h3>Pantalón Denim</h3>
+                <p>59.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+            <div class="product-card" data-id="4" data-name="Pantalón de Lino" data-price="59.99">
+                <img src="imagenes/IMG_9595-removebg-preview.png" alt="Pantalones">
+                <h3>Pantalón de Lino</h3>
+                <p>59.99€</p>
+                <button class="add-to-cart">Añadir</button>
+             </div>
+            <div class="product-card" data-id="5" data-name="Top Encaje Marrón" data-price="19.99">
+                <img src="imagenes/IMG_9596-removebg-preview.png" alt="Camiseta">
+                <h3>Top Encaje Marrón</h3>
+                <p>19.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+             <div class="product-card" data-id="6" data-name="Top Básico Gris" data-price="19.99">
+                <img src="imagenes/IMG_9598-removebg-preview.png" alt="Camiseta">
+                <h3>Top Básico Gris</h3>
+                <p>19.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISTA 2: HOMBRE -->
+    <div id="view-hombre" class="view-section">
+        <h2 class="section-title">Colección Hombre</h2>
+        <section class="products">
+            <div class="product-card" data-id="1" data-name="Camiseta Orgánica" data-price="29.99">
+                <img src="imagenes/IMG_9542-removebg-preview.png" alt="Camiseta">
+                <h3>Camiseta Orgánica</h3>
+                <p>29.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+            <div class="product-card" data-id="2" data-name="Chaqueta Denim" data-price="44.99">
+                <img src="imagenes/IMG_9547-removebg-preview.png" alt="Chaqueta">
+                <h3>Chaqueta Denim</h3>
+                <p>44.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+            <div class="product-card" data-id="3" data-name="Pantalón Chino" data-price="59.99">
+                <img src="imagenes/IMG_9544-removebg-preview.png" alt="Pantalones">
+                <h3>Pantalón Denim</h3>
+                <p>59.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISTA 3: MUJER -->
+    <div id="view-mujer" class="view-section">
+        <h2 class="section-title">Colección Mujer</h2>
+        <section class="products">
+           <div class="product-card" data-id="4" data-name="Pantalón de Lino" data-price="59.99">
+                <img src="imagenes/IMG_9595-removebg-preview.png" alt="Pantalones L">
+                <h3>Pantalón de Lino</h3>
+                <p>59.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+             <div class="product-card" data-id="5" data-name="Top Encaje Marrón" data-price="19.99">
+                <img src="imagenes/IMG_9596-removebg-preview.png" alt="Top EM">
+                <h3>Top Encaje Marrón</h3>
+                <p>19.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+             <div class="product-card" data-id="6" data-name="Top Básico Gris" data-price="19.99">
+                <img src="imagenes/IMG_9598-removebg-preview.png" alt="Top BG">
+                <h3>Top Básico Gris</h3>
+                <p>19.99€</p>
+                <button class="add-to-cart">Añadir</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISTA 4: CARRITO -->
+    <div id="view-carrito" class="view-section">
+        <div class="cart-container">
+            <h2>Tu Cesta</h2>
+            <div id="cart-items-list"></div>
+            <div class="total-container">Total: <span id="cart-total">0.00</span>€</div>
+            <button class="btn-clear" id="clear-cart">Vaciar Carrito</button>
+        </div>
+    </div>
+
+    <!-- Enlace al archivo JavaScript -->
+    <script src="script1.js"></script>
+</body>
+</html>
